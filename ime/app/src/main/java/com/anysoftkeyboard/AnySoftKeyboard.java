@@ -131,6 +131,12 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
     }
 
     @Override
+    public InputConnection getCurrentInputConnection(){
+        InputConnection ic = super.getCurrentInputConnection();
+        return new InputConnectionWrapper(ic);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         mOrientation = getResources().getConfiguration().orientation;
