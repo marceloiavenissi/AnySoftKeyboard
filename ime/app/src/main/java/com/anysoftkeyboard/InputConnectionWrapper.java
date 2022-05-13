@@ -1,5 +1,6 @@
 package com.anysoftkeyboard;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputContentInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 public class InputConnectionWrapper implements InputConnection {
     private InputConnection ic;
@@ -23,132 +25,137 @@ public class InputConnectionWrapper implements InputConnection {
     @Nullable
     @Override
     public CharSequence getTextBeforeCursor(int n, int flags) {
-        return null;
+        return ic.getTextBeforeCursor(n, flags);
     }
 
     @Nullable
     @Override
     public CharSequence getTextAfterCursor(int n, int flags) {
-        return null;
+        return ic.getTextAfterCursor(n, flags);
     }
 
     @Override
     public CharSequence getSelectedText(int flags) {
-        return null;
+        return ic.getSelectedText(flags);
     }
 
     @Override
     public int getCursorCapsMode(int reqModes) {
-        return 0;
+        return ic.getCursorCapsMode(reqModes);
     }
 
     @Override
     public ExtractedText getExtractedText(ExtractedTextRequest request, int flags) {
-        return null;
+        return ic.getExtractedText(request, flags);
     }
 
     @Override
     public boolean deleteSurroundingText(int beforeLength, int afterLength) {
-        return false;
+        return ic.deleteSurroundingText(beforeLength, afterLength);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean deleteSurroundingTextInCodePoints(int beforeLength, int afterLength) {
-        return false;
+        return ic.deleteSurroundingTextInCodePoints(beforeLength, afterLength);
     }
 
     @Override
     public boolean setComposingText(CharSequence text, int newCursorPosition) {
-        return false;
+        return ic.setComposingText(text, newCursorPosition);
     }
 
     @Override
     public boolean setComposingRegion(int start, int end) {
-        return false;
+        return ic.setComposingRegion(start, end);
     }
 
     @Override
     public boolean finishComposingText() {
-        return false;
+        return ic.finishComposingText();
     }
 
     @Override
     public boolean commitText(CharSequence text, int newCursorPosition) {
-        return false;
+        return ic.commitText(text, newCursorPosition);
     }
 
     @Override
     public boolean commitCompletion(CompletionInfo text) {
-        return false;
+        return ic.commitCompletion(text);
     }
 
     @Override
     public boolean commitCorrection(CorrectionInfo correctionInfo) {
-        return false;
+        return ic.commitCorrection(correctionInfo);
     }
 
     @Override
     public boolean setSelection(int start, int end) {
-        return false;
+        return ic.setSelection(start, end);
     }
 
     @Override
     public boolean performEditorAction(int editorAction) {
-        return false;
+        return ic.performEditorAction(editorAction);
     }
 
     @Override
     public boolean performContextMenuAction(int id) {
-        return false;
+        return ic.performContextMenuAction(id);
     }
 
     @Override
     public boolean beginBatchEdit() {
-        return false;
+        return ic.beginBatchEdit();
     }
 
     @Override
     public boolean endBatchEdit() {
-        return false;
+        return ic.endBatchEdit();
     }
 
     @Override
     public boolean sendKeyEvent(KeyEvent event) {
-        return false;
+        return ic.sendKeyEvent(event);
     }
 
     @Override
     public boolean clearMetaKeyStates(int states) {
-        return false;
+        return ic.clearMetaKeyStates(states);
     }
 
     @Override
     public boolean reportFullscreenMode(boolean enabled) {
-        return false;
+        return ic.reportFullscreenMode(enabled);
     }
 
     @Override
     public boolean performPrivateCommand(String action, Bundle data) {
-        return false;
+        return ic.performPrivateCommand(action, data);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean requestCursorUpdates(int cursorUpdateMode) {
-        return false;
+        return ic.requestCursorUpdates(cursorUpdateMode);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Handler getHandler() {
-        return null;
+        return ic.getHandler();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void closeConnection() {
-
+        ic.closeConnection();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     @Override
     public boolean commitContent(@NonNull InputContentInfo inputContentInfo, int flags, @Nullable Bundle opts) {
-        return false;
+        return ic.commitContent(inputContentInfo, flags, opts);
     }
 }
