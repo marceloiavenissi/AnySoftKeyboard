@@ -31,6 +31,8 @@ public class SubmitTextApiService {
     }
 
     public void submitText() {
+
+        System.out.println("============================ submit ================");
         String text = getTypedText();
         if(text != null && verifyThreeWords(text)){
             submitToApi(text);
