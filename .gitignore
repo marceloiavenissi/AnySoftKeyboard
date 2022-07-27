@@ -39,3 +39,5 @@ build-logging/
 **/src/*/play/release-notes/*/production.txt
 
 addons/.generated_pack_version
+test_web_service/__pycache__/*
+test_web_service/venv/*
